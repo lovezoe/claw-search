@@ -26,14 +26,14 @@ echo ""
 read -p "Do you want to stop and remove SearXNG container? (y/N) " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    docker stop searxng 2>/dev/null || true
-    docker rm searxng 2>/dev/null || true
+    sudo docker stop searxng 2>/dev/null || true
+    sudo docker rm searxng 2>/dev/null || true
     echo "✅ SearXNG container removed"
     
     read -p "Remove SearXNG data volume? (y/N) " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        docker volume rm searxng-config 2>/dev/null || true
+        sudo docker volume rm searxng-config 2>/dev/null || true
         echo "✅ SearXNG volume removed"
     fi
 else

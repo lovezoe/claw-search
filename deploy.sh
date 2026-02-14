@@ -1,5 +1,6 @@
 #!/bin/bash
 # Deploy script for claw-search with SearXNG
+# NOTE: This script requires sudo for Docker commands
 # This script sets up everything needed for claw-search to work
 
 set -e
@@ -15,17 +16,17 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 # Check if SearXNG is already running
-if docker ps | grep -q searxng; then
+if sudo docker ps | grep -q searxng; then
     echo -e "${GREEN}✅ SearXNG is already running${NC}"
 else
     echo "📦 Step 1: Deploying SearXNG..."
     
     # Clean up old containers/volumes
-    docker stop searxng 2>/dev/null || true
-    docker rm searxng 2>/dev/null || true
+    sudo docker stop searxng 2>/dev/null || true
+    sudo docker rm searxng 2>/dev/null || true
     
     # Start SearXNG with default config
-    docker run -d \
+    sudo docker run -d \
       --name searxng \
       --restart=always \
       -p 8888:8080 \
@@ -37,10 +38,10 @@ else
     
     # Enable JSON API (critical step!)
     echo "   Enabling JSON API..."
-    docker exec searxng sed -i '/^  formats:$/a\    - json' /etc/searxng/settings.yml
+    sudo docker exec searxng sed -i '/^  formats:$/a\    - json' /etc/searxng/settings.yml
     
     echo "   Restarting SearXNG..."
-    docker restart searxng
+    sudo docker restart searxng
     sleep 20
     
     echo -e "${GREEN}✅ SearXNG configured with JSON API${NC}"
