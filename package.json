@@ -1,0 +1,28 @@
+{
+  "name": "claw-search",
+  "version": "1.1.0",
+  "description": "Self-hosted private web search for OpenClaw using SearXNG",
+  "main": "index.ts",
+  "license": "MIT",
+  "keywords": [
+    "openclaw",
+    "plugin",
+    "search",
+    "searxng",
+    "privacy",
+    "typescript"
+  ],
+  "author": "claw-search contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/binglius/claw-search.git"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
