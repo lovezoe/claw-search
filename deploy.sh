@@ -40,11 +40,21 @@ else
     echo "   Enabling JSON API..."
     sudo docker exec searxng sed -i '/^  formats:$/a\    - json' /etc/searxng/settings.yml
     
+    # Enable Chinese search engines for better Chinese content
+    echo "   Enabling Chinese search engines (baidu, sogou, bing, chinaso news, bilibili, iqiyi)..."
+    sudo docker exec searxng sed -i '/^  - name: baidu$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
+    sudo docker exec searxng sed -i '/^  - name: sogou$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
+    sudo docker exec searxng sed -i '/^  - name: bing$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
+    sudo docker exec searxng sed -i '/^  - name: chinaso news$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
+    sudo docker exec searxng sed -i '/^  - name: chinaso news$/,/^    inactive:/ s/inactive: true/inactive: false/' /etc/searxng/settings.yml
+    sudo docker exec searxng sed -i '/^  - name: bilibili$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
+    sudo docker exec searxng sed -i '/^  - name: iqiyi$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
+    
     echo "   Restarting SearXNG..."
     sudo docker restart searxng
     sleep 20
     
-    echo -e "${GREEN}✅ SearXNG configured with JSON API${NC}"
+    echo -e "${GREEN}✅ SearXNG configured with JSON API and Chinese engines${NC}"
 fi
 
 # Verify SearXNG is working

@@ -1,6 +1,6 @@
 {
   "name": "claw-search",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Self-hosted private web search for OpenClaw using SearXNG",
   "main": "index.ts",
   "license": "MIT",
@@ -10,7 +10,10 @@
     "search",
     "searxng",
     "privacy",
-    "typescript"
+    "typescript",
+    "chinese",
+    "bilibili",
+    "baidu"
   ],
   "author": "claw-search contributors",
   "repository": {

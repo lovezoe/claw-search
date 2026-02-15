@@ -2,7 +2,7 @@
  * claw-search - Self-hosted private web search for OpenClaw
  * Using SearXNG for privacy-focused search results
  * 
- * @version 1.1.0
+ * @version 1.2.0
  * @license MIT
  */
 
@@ -253,8 +253,23 @@ export default function (api: OpenClawPluginApi) {
       description: config.description,
       parameters: baseParams,
       async execute(_id: string, params: any) {
+        // Auto-enhance query for search_repos
+        let query = params.query;
+        if (config.name === 'search_repos' && !query.includes('site:')) {
+          // Smart platform detection
+          const lowerQuery = query.toLowerCase();
+          if (lowerQuery.includes('gitlab')) {
+            query = `${query} site:gitlab.com`;
+          } else if (lowerQuery.includes('bitbucket')) {
+            query = `${query} site:bitbucket.org`;
+          } else {
+            // Default to GitHub (most common)
+            query = `${query} site:github.com`;
+          }
+        }
+        
         return performSearch({
-          query: params.query,
+          query: query,
           count: params.count,
           category: config.category,
           formatResult: config.formatResult
@@ -292,7 +307,7 @@ export default function (api: OpenClawPluginApi) {
     // News search
     {
       name: 'search_news',
-      description: 'Search for news articles using your SearXNG instance. Returns news results.',
+      description: 'Search for news articles. NOTE: Chinese news coverage is limited. For better Chinese news results, consider using the "search" tool instead.',
       category: 'news',
       formatResult: (result, idx) => {
         let text = `${idx + 1}. **${result.title}**\n`;
@@ -359,8 +374,8 @@ export default function (api: OpenClawPluginApi) {
     // Code/Repository search
     {
       name: 'search_repos',
-      description: 'Search for code repositories on GitHub, GitLab, and other platforms. Returns repository information.',
-      category: 'it',
+      description: 'Search for code repositories. Automatically detects platform: GitHub (default), GitLab (if query contains "gitlab"), or Bitbucket (if query contains "bitbucket"). Site operator is added internally.',
+      category: 'general',
       formatResult: (result, idx) => {
         let text = `${idx + 1}. **${result.title}**\n`;
         text += `   💻 ${result.url}\n`;

@@ -2,24 +2,31 @@
 
 **Self-hosted private web search for OpenClaw**
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)]()
 [![Tools](https://img.shields.io/badge/tools-6-brightgreen.svg)]()
 
 A complete OpenClaw plugin that provides web search using your own SearXNG instance. Zero tracking, zero API costs, 100% private.
 
-> **Latest:** v1.1.0 major refactoring - extensible architecture + 3 new search tools! See [CHANGELOG](CHANGELOG.md).
+> **Latest:** v1.2.0 Chinese content support - Baidu, Sogou, Bilibili, iQiyi + Smart repo search! See [CHANGELOG](CHANGELOG.md).
 
 ## ✨ Features
 
 ### Search Tools (6 Total)
 - 🔍 **General search** - Web results from multiple search engines
-- 📰 **News search** - Time-filtered news articles
+- 📰 **News search** - Time-filtered news articles (Chinese news: use general search for better results)
 - 🖼️ **Image search** - Find images with metadata
-- 🎬 **Video search** - Search YouTube, Vimeo, and more (NEW!)
-- 💻 **Repository search** - Find code on GitHub, GitLab (NEW!)
-- 💡 **Quick answer** - Get direct answers to questions (NEW!)
+- 🎬 **Video search** - Search YouTube, Vimeo, Bilibili, iQiyi, and more
+- 💻 **Repository search** - Find code on GitHub/GitLab (auto-adds site: operator)
+- 💡 **Quick answer** - Get direct answers to questions
+
+### Chinese Content Support 🇨🇳
+- ✅ **Baidu** (百度) - General search
+- ✅ **Sogou** (搜狗) - General search  
+- ✅ **Chinaso News** (中国搜索) - News search
+- ✅ **Bilibili** (哔哩哔哩) - Video search
+- ✅ **iQiyi** (爱奇艺) - Video search
 
 ### Core Benefits
 - 🔒 **100% Private** - Your SearXNG, your data
@@ -49,8 +56,18 @@ cd claw-search
 The script automatically:
 - ✅ Deploys SearXNG if not running
 - ✅ Configures JSON API
+- ✅ Enables Chinese search engines (baidu, sogou, chinaso, bilibili, iqiyi)
 - ✅ Installs the plugin
 - ✅ Restarts gateway
+
+### Update Existing Installation
+
+```bash
+cd claw-search
+./update.sh --yes  # Non-interactive mode
+# or
+./update.sh        # Interactive mode with confirmation
+```
 
 
 ## Installation
@@ -158,13 +175,19 @@ Search for videos from YouTube, Vimeo, and other platforms.
 - "Search for quantum computing lectures"
 - "Show me cooking videos"
 
-### 5. `search_repos` 💻 NEW!
-Search code repositories on GitHub, GitLab, and other platforms.
+### 5. `search_repos` 💻
+Search code repositories. **Automatically adds `site:github.com`** for better results.
+
+**Smart platform detection:**
+- Default: GitHub
+- Query contains "gitlab": GitLab  
+- Query contains "bitbucket": Bitbucket
 
 **Example queries:**
 - "Find React repositories"
 - "Search for Python machine learning projects"
 - "Look up Docker alternatives"
+- "Find gitlab CI/CD projects" (auto-detects GitLab)
 
 ### 6. `quick_answer` 💡 NEW!
 Get direct answers to factual questions.

@@ -1,6 +1,9 @@
 #!/bin/bash
 # Uninstall script for claw-search
 
+# Support non-interactive mode
+INTERACTIVE=${INTERACTIVE:-true}
+
 echo "🗑️  claw-search Uninstall Script"
 echo "================================="
 echo ""
@@ -21,18 +24,31 @@ else
     echo "⚠️  jq not found, skip config cleanup (manual edit needed)"
 fi
 
-# Ask about SearXNG
+# Handle SearXNG removal
 echo ""
-read -p "Do you want to stop and remove SearXNG container? (y/N) " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+if [ "$INTERACTIVE" = "true" ]; then
+    read -p "Do you want to stop and remove SearXNG container? (y/N) " -n 1 -r
+    echo
+    REMOVE_CONTAINER=$REPLY
+else
+    # Non-interactive mode: remove container by default
+    REMOVE_CONTAINER="y"
+fi
+
+if [[ $REMOVE_CONTAINER =~ ^[Yy]$ ]]; then
     sudo docker stop searxng 2>/dev/null || true
     sudo docker rm searxng 2>/dev/null || true
     echo "✅ SearXNG container removed"
     
-    read -p "Remove SearXNG data volume? (y/N) " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if [ "$INTERACTIVE" = "true" ]; then
+        read -p "Remove SearXNG data volume? (y/N) " -n 1 -r
+        echo
+        REMOVE_VOLUME=$REPLY
+    else
+        REMOVE_VOLUME="n"
+    fi
+    
+    if [[ $REMOVE_VOLUME =~ ^[Yy]$ ]]; then
         sudo docker volume rm searxng-config 2>/dev/null || true
         echo "✅ SearXNG volume removed"
     fi
