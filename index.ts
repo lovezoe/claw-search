@@ -170,7 +170,7 @@ export default function (api: OpenClawPluginApi) {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
-            'User-Agent': 'OpenClaw/claw-search/1.1.0'
+            'User-Agent': 'OpenClaw/claw-search/1.2.0'
           },
           signal: controller.signal
         });

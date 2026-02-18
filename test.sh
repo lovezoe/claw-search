@@ -1,7 +1,7 @@
 #!/bin/bash
-# Test script for claw-search plugin v1.1.0
+# Test script for claw-search plugin v1.2.0
 
-echo "🧪 Testing claw-search v1.1.0"
+echo "🧪 Testing claw-search v1.2.0"
 echo "=============================="
 echo ""
 
@@ -66,9 +66,9 @@ else
     ((FAILED++)) || true
 fi
 
-# Test 5: Video search (NEW in v1.1.0)
+# Test 5: Video search (NEW in v1.2.0)
 echo ""
-echo -e "Test 5: Video Search ${BLUE}(NEW in v1.1.0)${NC}"
+echo -e "Test 5: Video Search ${BLUE}(NEW in v1.2.0)${NC}"
 VIDEO_COUNT=$(curl -s "$SEARXNG_URL/search?q=tutorial&format=json&categories=videos" | jq -r '.results | length' 2>/dev/null || echo "0")
 if [ "$VIDEO_COUNT" -gt 0 ]; then
     echo -e "   ${GREEN}✅ PASSED${NC} - Got $VIDEO_COUNT results"
@@ -77,9 +77,9 @@ else
     echo -e "   ${YELLOW}⚠️  WARNING${NC} - No video results (category may not be configured)"
 fi
 
-# Test 6: Repository search (NEW in v1.1.0)
+# Test 6: Repository search (NEW in v1.2.0)
 echo ""
-echo -e "Test 6: Repository Search ${BLUE}(NEW in v1.1.0)${NC}"
+echo -e "Test 6: Repository Search ${BLUE}(NEW in v1.2.0)${NC}"
 REPO_COUNT=$(curl -s "$SEARXNG_URL/search?q=javascript&format=json&categories=it" | jq -r '.results | length' 2>/dev/null || echo "0")
 if [ "$REPO_COUNT" -gt 0 ]; then
     echo -e "   ${GREEN}✅ PASSED${NC} - Got $REPO_COUNT results"
@@ -88,9 +88,9 @@ else
     echo -e "   ${YELLOW}⚠️  WARNING${NC} - No repository results (category may not be configured)"
 fi
 
-# Test 7: Quick answer (NEW in v1.1.0)
+# Test 7: Quick answer (NEW in v1.2.0)
 echo ""
-echo -e "Test 7: Quick Answer ${BLUE}(NEW in v1.1.0)${NC}"
+echo -e "Test 7: Quick Answer ${BLUE}(NEW in v1.2.0)${NC}"
 ANSWER_COUNT=$(curl -s "$SEARXNG_URL/search?q=what+is+python&format=json" | jq -r '.results | length' 2>/dev/null || echo "0")
 if [ "$ANSWER_COUNT" -gt 0 ]; then
     echo -e "   ${GREEN}✅ PASSED${NC} - Got $ANSWER_COUNT results"
@@ -105,11 +105,11 @@ echo ""
 echo "Test 8: Plugin Installation"
 if [ -d ~/.openclaw/extensions/claw-search ]; then
     VERSION=$(cat ~/.openclaw/extensions/claw-search/package.json 2>/dev/null | jq -r '.version' 2>/dev/null || echo "unknown")
-    if [ "$VERSION" = "1.1.0" ]; then
+    if [ "$VERSION" = "1.2.0" ]; then
         echo -e "   ${GREEN}✅ PASSED${NC} - Plugin installed (version $VERSION)"
         ((PASSED++)) || true
     else
-        echo -e "   ${YELLOW}⚠️  WARNING${NC} - Plugin version is $VERSION (expected 1.1.0)"
+        echo -e "   ${YELLOW}⚠️  WARNING${NC} - Plugin version is $VERSION (expected 1.2.0)"
     fi
 else
     echo -e "   ${BLUE}ℹ️  INFO${NC} - Plugin not installed locally"
