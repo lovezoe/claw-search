@@ -90,10 +90,10 @@ cd claw-search
 ### Manual Steps
 ```bash
 # 1. Deploy SearXNG
-docker run -d --name searxng --restart=always -p 8888:8080 searxng/searxng:latest
+podman run -d --name searxng --restart=always -p 8888:8080 searxng/searxng:latest
 sleep 20
-docker exec searxng sed -i '/^  formats:$/a\    - json' /etc/searxng/settings.yml
-docker restart searxng
+podman exec searxng sed -i '/^  formats:$/a\    - json' /etc/searxng/settings.yml
+podman restart searxng
 sleep 20
 
 # 2. Install plugin

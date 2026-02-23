@@ -261,15 +261,15 @@ Don't have SearXNG? Here's a 2-minute setup:
 
 ```bash
 # 1. Run SearXNG in Docker
-docker run -d \
+podman run -d \
   --name searxng \
   --restart=always \
   -p 8888:8080 \
   searxng/searxng:latest
 
 # 2. Enable JSON API
-docker exec searxng sed -i '/formats:/,/- html/{s/- html/- html\n    - json/}' /etc/searxng/settings.yml
-docker restart searxng
+podman exec searxng sed -i '/formats:/,/- html/{s/- html/- html\n    - json/}' /etc/searxng/settings.yml
+podman restart searxng
 
 # 3. Test it
 curl "http://localhost:8888/search?q=test&format=json" | jq
@@ -395,10 +395,10 @@ openclaw gateway restart
 ### Update SearXNG
 
 ```bash
-docker pull searxng/searxng:latest
-docker stop searxng
-docker rm searxng
-# Re-run docker run command from setup
+podman pull searxng/searxng:latest
+podman stop searxng
+podman rm searxng
+# Re-run podman run command from setup
 ```
 
 ## Uninstall

@@ -36,8 +36,8 @@ else
 fi
 
 if [[ $REMOVE_CONTAINER =~ ^[Yy]$ ]]; then
-    sudo docker stop searxng 2>/dev/null || true
-    sudo docker rm searxng 2>/dev/null || true
+    podman stop searxng 2>/dev/null || true
+    podman rm searxng 2>/dev/null || true
     echo "✅ SearXNG container removed"
     
     if [ "$INTERACTIVE" = "true" ]; then
@@ -49,7 +49,7 @@ if [[ $REMOVE_CONTAINER =~ ^[Yy]$ ]]; then
     fi
     
     if [[ $REMOVE_VOLUME =~ ^[Yy]$ ]]; then
-        sudo docker volume rm searxng-config 2>/dev/null || true
+        podman volume rm searxng-config 2>/dev/null || true
         echo "✅ SearXNG volume removed"
     fi
 else

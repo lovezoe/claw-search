@@ -28,7 +28,7 @@ If you prefer step-by-step:
 ### 1. Deploy SearXNG
 
 ```bash
-docker run -d \
+podman run -d \
   --name searxng \
   --restart=always \
   -p 8888:8080 \
@@ -38,8 +38,8 @@ docker run -d \
 sleep 15
 
 # Enable JSON API
-docker exec searxng sed -i '/formats:/a\    - json' /etc/searxng/settings.yml
-docker restart searxng
+podman exec searxng sed -i '/formats:/a\    - json' /etc/searxng/settings.yml
+podman restart searxng
 ```
 
 ### 2. Install Plugin
@@ -88,13 +88,13 @@ Or ask OpenClaw:
 
 ```bash
 # Check if running
-docker ps | grep searxng
+podman ps | grep searxng
 
 # Check logs
-docker logs searxng
+podman logs searxng
 
 # Restart
-docker restart searxng
+podman restart searxng
 ```
 
 ### Plugin not loading

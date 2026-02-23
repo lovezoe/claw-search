@@ -25,7 +25,7 @@ if curl -s --max-time 3 "$SEARXNG_URL" > /dev/null 2>&1; then
     ((PASSED++)) || true
 else
     echo -e "   ${RED}❌ FAILED${NC} - SearXNG not accessible at $SEARXNG_URL"
-    echo -e "   ${BLUE}ℹ️  Make sure SearXNG is running:${NC} docker ps | grep searxng"
+    echo -e "   ${BLUE}ℹ️  Make sure SearXNG is running:${NC} podman ps | grep searxng"
     ((FAILED++)) || true
     exit 1
 fi

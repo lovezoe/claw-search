@@ -16,17 +16,17 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 # Check if SearXNG is already running
-if sudo docker ps | grep -q searxng; then
+if podman ps | grep -q searxng; then
     echo -e "${GREEN}✅ SearXNG is already running${NC}"
 else
     echo "📦 Step 1: Deploying SearXNG..."
     
     # Clean up old containers/volumes
-    sudo docker stop searxng 2>/dev/null || true
-    sudo docker rm searxng 2>/dev/null || true
+    podman stop searxng 2>/dev/null || true
+    podman rm searxng 2>/dev/null || true
     
     # Start SearXNG with default config
-    sudo docker run -d \
+    podman run -d \
       --name searxng \
       --restart=always \
       -p 8888:8080 \
@@ -38,20 +38,20 @@ else
     
     # Enable JSON API (critical step!)
     echo "   Enabling JSON API..."
-    sudo docker exec searxng sed -i '/^  formats:$/a\    - json' /etc/searxng/settings.yml
+    podman exec searxng sed -i '/^  formats:$/a\    - json' /etc/searxng/settings.yml
     
     # Enable Chinese search engines for better Chinese content
     echo "   Enabling Chinese search engines (baidu, sogou, bing, chinaso news, bilibili, iqiyi)..."
-    sudo docker exec searxng sed -i '/^  - name: baidu$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
-    sudo docker exec searxng sed -i '/^  - name: sogou$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
-    sudo docker exec searxng sed -i '/^  - name: bing$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
-    sudo docker exec searxng sed -i '/^  - name: chinaso news$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
-    sudo docker exec searxng sed -i '/^  - name: chinaso news$/,/^    inactive:/ s/inactive: true/inactive: false/' /etc/searxng/settings.yml
-    sudo docker exec searxng sed -i '/^  - name: bilibili$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
-    sudo docker exec searxng sed -i '/^  - name: iqiyi$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
+    podman exec searxng sed -i '/^  - name: baidu$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
+    podman exec searxng sed -i '/^  - name: sogou$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
+    podman exec searxng sed -i '/^  - name: bing$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
+    podman exec searxng sed -i '/^  - name: chinaso news$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
+    podman exec searxng sed -i '/^  - name: chinaso news$/,/^    inactive:/ s/inactive: true/inactive: false/' /etc/searxng/settings.yml
+    podman exec searxng sed -i '/^  - name: bilibili$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
+    podman exec searxng sed -i '/^  - name: iqiyi$/,/^    disabled:/ s/disabled: true/disabled: false/' /etc/searxng/settings.yml
     
     echo "   Restarting SearXNG..."
-    sudo docker restart searxng
+    podman restart searxng
     sleep 20
     
     echo -e "${GREEN}✅ SearXNG configured with JSON API and Chinese engines${NC}"

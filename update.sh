@@ -37,7 +37,7 @@ if [ ! -f "./deploy.sh" ]; then
 fi
 
 # Check if anything is installed
-if ! sudo docker ps -a | grep -q searxng && ! openclaw plugins list 2>/dev/null | grep -q claw-search; then
+if ! podman ps -a | grep -q searxng && ! openclaw plugins list 2>/dev/null | grep -q claw-search; then
     echo -e "${YELLOW}⚠️  Nothing to update${NC}"
     echo "Run ./deploy.sh to install."
     exit 0
